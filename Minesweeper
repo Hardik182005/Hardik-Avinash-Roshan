@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 10
+#define MINES 10
+
+char board[SIZE][SIZE];
+int revealed[SIZE][SIZE];
+
+void init() {
+    int i, j;
+    for(i = 0; i < SIZE; i++) {
+        for(j = 0; j < SIZE; j++) {
+            board[i][j] = '0';
+            revealed[i][j] = 0;
+        }
+    }
+}
+
+void placeMines() {
+    int i, x, y;
+    srand(time(0));
+    for(i = 0; i < MINES;) {
+        x = rand() % SIZE;
+        y = rand() % SIZE;
+        if(board[x][y] == '0') {
+            board[x][y] = '*';
+            i++;
+        }
+    }
+}
+
+void printBoard() {
+    int i, j;
+    printf("   ");
+    for(i = 0; i < SIZE; i++)
+        printf(" %d", i);
+    printf("\n   ");
+    for(i = 0; i < SIZE; i++)
+        printf("--");
+    printf("\n");
+    for(i = 0; i < SIZE; i++) {
+        printf("%d |", i);
+        for(j = 0; j < SIZE; j++) {
+            if(revealed[i][j])
+                printf(" %c", board[i][j]);
+            else
+                printf(" #");
+        }
+        printf("\n");
+    }
+}
+
+int countMines(int x, int y) {
+    int count = 0, i, j;
+    for(i = -1; i <= 1; i++)
+        for(j = -1; j <= 1; j++)
+            if(x+i >= 0 && x+i < SIZE && y+j >= 0 && y+j < SIZE && board[x+i][y+j] == '*')
+                count++;
+    return count;
+}
+
+void reveal(int x, int y) {
+    int revealedCount;
+    if(x >= 0 && x < SIZE && y >= 0 && y < SIZE && !revealed[x][y]) {
+        revealed[x][y] = 1;
+        if(board[x][y] == '*')
+            return;
+        revealedCount = countMines(x, y);
+        if(revealedCount == 0) {
+            board[x][y] = ' ';
+            reveal(x-1, y-1);
+            reveal(x-1, y);
+            reveal(x-1, y+1);
+            reveal(x, y-1);
+            reveal(x, y+1);
+            reveal(x+1, y-1);
+            reveal(x+1, y);
+            reveal(x+1, y+1);
+        } else
+            board[x][y] = '0' + revealedCount;
+    }
+}
+
+int main() {
+    int x, y;
+    init();
+    placeMines();
+    
+    while(1) {
+        printBoard();
+        printf("Enter the coordinates (x,y) of the cell you want to reveal: ");
+        scanf("%d %d", &x, &y);
+        
+        if(board[x][y] == '*') {
+            printf("Game Over!\n");
+            break;
+        } else
+            reveal(x, y);
+    }
+    
+    return 0;
+}
