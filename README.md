@@ -7,3 +7,4 @@ Please note that this is a basic version of Minesweeper and doesn't include feat
 In the context of programming with C, creating a Minesweeper game would involve using data structures (like arrays for the game board), control flow (loops and conditionals for gameplay mechanics), and possibly some simple graphics for displaying the board to the user. It's a great project for practicing these fundamental concepts.
 ok take it bye
 minesweeper is nice
+good game
