@@ -5,3 +5,4 @@ This is a simple console-based Minesweeper game. The game starts by initializing
 Please note that this is a basic version of Minesweeper and doesn't include features like flagging mines or winning the game when all non-mine cells are revealed. You might want to enhance this code to add these features and improve the gameplay.
 
 In the context of programming with C, creating a Minesweeper game would involve using data structures (like arrays for the game board), control flow (loops and conditionals for gameplay mechanics), and possibly some simple graphics for displaying the board to the user. It's a great project for practicing these fundamental concepts.
+ok take it bye
